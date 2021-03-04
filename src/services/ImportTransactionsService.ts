@@ -45,6 +45,16 @@ class ImportTransactionsService {
 
     parseCSV.on('data', line => {
       const [title, type, value, category] = line;
+
+      if (
+        !title ||
+        !type ||
+        !value ||
+        !['income', 'outcome'].includes(type) ||
+        Number.isNaN(Number(value))
+      )
+        return;
+
       transactionsListCSV.push({ title, type, value, category_id: category });
       categoriesListCSV.push(category);
     });
