@@ -25,7 +25,7 @@ class ImportTransactionsService {
   async execute({ filename, mimetype }: Request): Promise<Transaction[]> {
     const csvFilePath = path.join(uploadConfig.directory, filename);
 
-    if (mimetype !== 'text/csv') {
+    if (mimetype !== 'text/csv' && mimetype !== 'application/octet-stream') {
       await fs.promises.unlink(csvFilePath);
       throw new AppError('File type shoud be csv.');
     }
